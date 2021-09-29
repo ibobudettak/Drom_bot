@@ -23,9 +23,14 @@ def drom_bot(url):
     part_name.send_keys(selenium.webdriver.common.keys.Keys.ENTER)
     sleep(randint(3, 5))
     value = browser.find_elements_by_class_name('ellipsis-text__left-side')
-    print(value)
     for i in value:
         print(i.text)
+        if str(i.text) == 'AZIMAX':
+            print('да')
+            i.click()
+            break
+        else:
+            print('нет')
     sleep(5)
     browser.close()
 
