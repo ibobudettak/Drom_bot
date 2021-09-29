@@ -21,10 +21,11 @@ def drom_bot(url):
     part_name.send_keys('Пыльник ШРУСа FB2147')
     sleep(randint(3, 5))
     part_name.send_keys(selenium.webdriver.common.keys.Keys.ENTER)
-    value = browser.find_elements_by_class_name('descriptionCell bull-item-content__cell bull-item-content__'
-                                                'description-cell js-description-block').text
+    sleep(randint(3, 5))
+    value = browser.find_elements_by_class_name('ellipsis-text__left-side')
     print(value)
-
+    for i in value:
+        print(i.text)
     sleep(5)
     browser.close()
 
