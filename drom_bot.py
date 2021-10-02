@@ -23,32 +23,36 @@ def get_sellers():
 
 
 def drom_bot():
-    for cycle in range(1, 21):
+    for cycle in range(1, 31):
         print(f'{cycle}ый цикл.')
         browser = webdriver.Edge('D:\PYTHON\Drom_bot\edgedriver_win64\msedgedriver.exe')
         browser.get('https://www.drom.ru/')
-        sleep(randint(3, 5))
+        sleep(randint(3, 4))
         browser.get('https://baza.drom.ru/omsk/sell_spare_parts/')
-        sleep(randint(3, 5))
+        sleep(randint(3, 4))
         scroll = randint(300, 500)
         browser.execute_script(f"window.scrollTo(0, {scroll})")
-        sleep(randint(3, 5))
+        sleep(randint(3, 4))
         part_name = browser.find_element_by_name('query')
         part_name.clear()
         part_name.send_keys(random.choice(spare_parts_list))
-        sleep(randint(3, 5))
+        sleep(randint(3, 4))
         part_name.send_keys(selenium.webdriver.common.keys.Keys.ENTER)
-        sleep(randint(3, 5))
+        sleep(randint(3, 4))
         value = browser.find_elements_by_class_name('ellipsis-text__left-side')
         for i in value:
             if str(i.text) in list_of_sellers:
                 print(f'совпадение продавца: {i.text}')
                 i.click()
                 print('Обьявление открыто!')
+                phone = browser.find_element_by_xpath('//*[@id="fieldsetView"]/div/div[1]/'
+                                                      'div/div[3]/div[1]/noindex/div/a')
+                phone.click()
+                print('Телефон просмотрен')
                 break
             else:
                 print('Нет обьявлений указанных продавцов!')
-        sleep(5)
+        sleep(3)
         browser.close()
 
 
