@@ -51,7 +51,7 @@ def drom_bot():
                 print('Телефон просмотрен')
                 break
             else:
-                print('Нет обьявлений указанных продавцов!')
+                print('Нет совпал продавец!')
         sleep(3)
         browser.close()
 
