@@ -61,9 +61,6 @@ def drom_bot():
                 # phone.click()
                 # print('Телефон просмотрен')
                 break
-            else:
-                print('Нет совпал продавец!')
-        sleep(3)
         browser.close()
 
 
@@ -75,16 +72,19 @@ drom_bot_1 = threading.Thread(target=drom_bot)
 drom_bot_2 = threading.Thread(target=drom_bot)
 drom_bot_3 = threading.Thread(target=drom_bot)
 drom_bot_4 = threading.Thread(target=drom_bot)
+drom_bot_5 = threading.Thread(target=drom_bot)
 
 drom_bot_1.start()
 drom_bot_2.start()
 drom_bot_3.start()
 drom_bot_4.start()
+drom_bot_5.start()
 
 drom_bot_1.join()
 drom_bot_2.join()
 drom_bot_3.join()
 drom_bot_4.join()
+drom_bot_5.join()
 
 end = time.time()
 print(dict_sellers)
