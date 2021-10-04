@@ -4,7 +4,7 @@ from selenium import webdriver
 from time import sleep
 from random import randint
 import selenium.webdriver.common.keys
-import threading
+import multiprocessing
 import time
 
 spare_parts_list = []
@@ -70,22 +70,23 @@ def drom_bot():
 we_get_the_name_of_the_spare_part()
 get_sellers()
 
-start = time.time()
-drom_bot_1 = threading.Thread(target=drom_bot)
-drom_bot_2 = threading.Thread(target=drom_bot)
-drom_bot_3 = threading.Thread(target=drom_bot)
-drom_bot_4 = threading.Thread(target=drom_bot)
+if __name__ == "__main__":
+    start = time.time()
+    drom_bot_1 = multiprocessing.Process(target=drom_bot)
+    drom_bot_2 = multiprocessing.Process(target=drom_bot)
+    drom_bot_3 = multiprocessing.Process(target=drom_bot)
+    drom_bot_4 = multiprocessing.Process(target=drom_bot)
 
-drom_bot_1.start()
-drom_bot_2.start()
-drom_bot_3.start()
-drom_bot_4.start()
+    drom_bot_1.start()
+    drom_bot_2.start()
+    drom_bot_3.start()
+    drom_bot_4.start()
 
-drom_bot_1.join()
-drom_bot_2.join()
-drom_bot_3.join()
-drom_bot_4.join()
+    drom_bot_1.join()
+    drom_bot_2.join()
+    drom_bot_3.join()
+    drom_bot_4.join()
 
-end = time.time()
-print(dict_sellers)
-print('Время работы:', end - start)
+    end = time.time()
+    print(dict_sellers)
+    print('Время работы:', end - start)
