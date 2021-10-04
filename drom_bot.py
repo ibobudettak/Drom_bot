@@ -25,67 +25,54 @@ def get_sellers():
 
 
 def drom_bot():
-    for cycle in range(1, 2):
-        print(f'***************  {cycle}ый цикл  ***************')
-        browser = webdriver.Edge('D:\PYTHON\Drom_bot\edgedriver_win64\msedgedriver.exe')
-        browser.get('https://www.drom.ru/')
-        sleep(randint(3, 3))
-        browser.get('https://baza.drom.ru/omsk/sell_spare_parts/')
-        sleep(randint(3, 3))
-        scroll = randint(300, 500)
-        browser.execute_script(f"window.scrollTo(0, {scroll})")
-        sleep(randint(3, 3))
-        part_name = browser.find_element_by_name('query')
-        part_name.clear()
-        part_name.send_keys(random.choice(spare_parts_list))
-        sleep(randint(3, 3))
-        part_name.send_keys(selenium.webdriver.common.keys.Keys.ENTER)
-        sleep(randint(3, 3))
-        value = browser.find_elements_by_class_name('ellipsis-text__left-side')
-        for i in value:
-            if str(i.text) in list_of_sellers:
-                key = i.text
-                count = 1
-                if key in dict_sellers:
-                    v_dict = dict_sellers[key]
-                    v_dict += 1
-                    dict_sellers[key] = v_dict
-                else:
-                    dict_sellers[key] = count
-
-                print(f'совпадение продавца: {i.text}')
-                i.click()
-                print('Обьявление открыто!')
-                # phone = browser.find_element_by_xpath('//*[@id="fieldsetView"]/div/div[1]/'
-                #                                       'div/div[3]/div[1]/noindex/div/a')
-                # phone.click()
-                # print('Телефон просмотрен')
-                break
-        browser.close()
+    browser = webdriver.Edge('D:\PYTHON\Drom_bot\edgedriver_win64\msedgedriver.exe')
+    browser.get('https://www.drom.ru/')
+    sleep(3)
+    browser.get('https://baza.drom.ru/omsk/sell_spare_parts/')
+    sleep(3)
+    scroll = randint(300, 500)
+    browser.execute_script(f"window.scrollTo(0, {scroll})")
+    sleep(3)
+    part_name = browser.find_element_by_name('query')
+    part_name.clear()
+    part_name.send_keys(random.choice(spare_parts_list))
+    sleep(3)
+    part_name.send_keys(selenium.webdriver.common.keys.Keys.ENTER)
+    sleep(3)
+    value = browser.find_elements_by_class_name('ellipsis-text__left-side')
+    for i in value:
+        if str(i.text) in list_of_sellers:
+            key = i.text
+            count = 1
+            if key in dict_sellers:
+                v_dict = dict_sellers[key]
+                v_dict += 1
+                dict_sellers[key] = v_dict
+            else:
+                dict_sellers[key] = count
+            print(f'совпадение продавца: {i.text}')
+            i.click()
+            # phone = browser.find_element_by_xpath('//*[@id="fieldsetView"]/div/div[1]/'
+            #                                       'div/div[3]/div[1]/noindex/div/a')
+            # phone.click()
+            # print('Телефон просмотрен')
+            break
+    browser.close()
 
 
 we_get_the_name_of_the_spare_part()
 get_sellers()
 
+threading_bot = ['drom_bot_1', 'drom_bot_2', 'drom_bot_3', 'drom_bot_4', 'drom_bot_5']
+
 start = time.time()
-drom_bot_1 = threading.Thread(target=drom_bot)
-drom_bot_2 = threading.Thread(target=drom_bot)
-drom_bot_3 = threading.Thread(target=drom_bot)
-drom_bot_4 = threading.Thread(target=drom_bot)
-drom_bot_5 = threading.Thread(target=drom_bot)
-
-drom_bot_1.start()
-drom_bot_2.start()
-drom_bot_3.start()
-drom_bot_4.start()
-drom_bot_5.start()
-
-drom_bot_1.join()
-drom_bot_2.join()
-drom_bot_3.join()
-drom_bot_4.join()
-drom_bot_5.join()
-
+for cycle in range(1, 11):
+    print('*' * 20, f'{cycle}ый цикл', '*' * 20)
+    threads_bot = [threading.Thread(target=drom_bot) for bots in threading_bot]
+    for bot in threads_bot:
+        bot.start()
+    for bot in threads_bot:
+        bot.join()
 end = time.time()
 print(dict_sellers)
 print('Время работы:', end - start)
