@@ -27,18 +27,18 @@ def get_sellers():
 def drom_bot():
     browser = webdriver.Edge('D:\PYTHON\Drom_bot\edgedriver_win64\msedgedriver.exe')
     browser.get('https://www.drom.ru/')
-    sleep(3)
+    sleep(5)
     browser.get('https://baza.drom.ru/omsk/sell_spare_parts/')
-    sleep(3)
+    sleep(5)
     scroll = randint(300, 500)
     browser.execute_script(f"window.scrollTo(0, {scroll})")
-    sleep(3)
+    sleep(5)
     part_name = browser.find_element_by_name('query')
     part_name.clear()
     part_name.send_keys(random.choice(spare_parts_list))
-    sleep(3)
+    sleep(5)
     part_name.send_keys(selenium.webdriver.common.keys.Keys.ENTER)
-    sleep(3)
+    sleep(5)
     value = browser.find_elements_by_class_name('ellipsis-text__left-side')
     for i in value:
         if str(i.text) in list_of_sellers:
@@ -66,7 +66,7 @@ get_sellers()
 threading_bot = ['drom_bot_1', 'drom_bot_2', 'drom_bot_3', 'drom_bot_4', 'drom_bot_5']
 
 start = time.time()
-for cycle in range(1, 11):
+for cycle in range(1, 2):
     print('*' * 20, f'{cycle}ый цикл', '*' * 20)
     threads_bot = [threading.Thread(target=drom_bot) for bots in threading_bot]
     for bot in threads_bot:
@@ -75,4 +75,4 @@ for cycle in range(1, 11):
         bot.join()
 end = time.time()
 print(dict_sellers)
-print('Время работы:', end - start)
+print('Время работы:', (end - start))
