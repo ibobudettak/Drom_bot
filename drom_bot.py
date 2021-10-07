@@ -66,7 +66,7 @@ get_sellers()
 threading_bot = ['drom_bot_1', 'drom_bot_2', 'drom_bot_3', 'drom_bot_4', 'drom_bot_5']
 
 start = time.time()
-for cycle in range(1, 2):
+for cycle in range(1, 101):
     print('*' * 20, f'{cycle}ый цикл', '*' * 20)
     threads_bot = [threading.Thread(target=drom_bot) for bots in threading_bot]
     for bot in threads_bot:
