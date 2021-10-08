@@ -25,7 +25,7 @@ def get_sellers():
 
 
 def drom_bot():
-    browser = webdriver.Edge('D:\PYTHON\Drom_bot\edgedriver_win64\msedgedriver.exe')
+    browser = webdriver.Chrome('chromedriver.exe')
     browser.get('https://www.drom.ru/')
     sleep(5)
     browser.get('https://baza.drom.ru/omsk/sell_spare_parts/')
