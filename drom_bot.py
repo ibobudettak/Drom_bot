@@ -25,20 +25,23 @@ def get_sellers():
 
 
 def drom_bot():
-    browser = webdriver.Chrome('chromedriver.exe')
+    options = webdriver.ChromeOptions()
+    prefs = {"profile.managed_default_content_settings.images": 2}
+    options.add_experimental_option("prefs", prefs)
+    browser = webdriver.Chrome('chromedriver.exe', chrome_options=options)
     browser.get('https://www.drom.ru/')
-    sleep(5)
+    sleep(3)
     browser.get('https://baza.drom.ru/omsk/sell_spare_parts/')
-    sleep(5)
+    sleep(3)
     scroll = randint(300, 500)
     browser.execute_script(f"window.scrollTo(0, {scroll})")
-    sleep(5)
+    sleep(3)
     part_name = browser.find_element_by_name('query')
     part_name.clear()
     part_name.send_keys(random.choice(spare_parts_list))
-    sleep(5)
+    sleep(3)
     part_name.send_keys(selenium.webdriver.common.keys.Keys.ENTER)
-    sleep(5)
+    sleep(3)
     value = browser.find_elements_by_class_name('ellipsis-text__left-side')
     for i in value:
         if str(i.text) in list_of_sellers:
