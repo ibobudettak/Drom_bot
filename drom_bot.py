@@ -6,6 +6,14 @@ from random import randint
 import selenium.webdriver.common.keys
 import threading
 import time
+import logging
+
+logging.basicConfig(filename="sample.log", level=logging.ERROR)
+
+
+class NotNameError(Exception):
+    pass
+
 
 spare_parts_list = []
 list_of_sellers = []
@@ -54,6 +62,7 @@ def drom_bot():
             else:
                 dict_sellers[key] = count
             print(f'совпадение продавца: {i.text}')
+            logging.error(f'совпадение продавца: {i.text}')
             i.click()
             # phone = browser.find_element_by_xpath('//*[@id="fieldsetView"]/div/div[1]/'
             #                                       'div/div[3]/div[1]/noindex/div/a')
@@ -69,13 +78,16 @@ get_sellers()
 threading_bot = ['drom_bot_1', 'drom_bot_2', 'drom_bot_3', 'drom_bot_4', 'drom_bot_5']
 
 start = time.time()
+
 for cycle in range(1, 101):
+    logging.error(f'*********Новый цикл***********')
     print('*' * 20, f'{cycle}ый цикл', '*' * 20)
     threads_bot = [threading.Thread(target=drom_bot) for bots in threading_bot]
     for bot in threads_bot:
         bot.start()
     for bot in threads_bot:
         bot.join()
+
 end = time.time()
 print(dict_sellers)
 print('Время работы:', (end - start))
