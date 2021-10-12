@@ -5,15 +5,11 @@ from time import sleep
 from random import randint
 import selenium.webdriver.common.keys
 import threading
-import time
 import logging
+import subprocess
+import datetime
 
-logging.basicConfig(filename="sample.log", level=logging.ERROR)
-
-
-class NotNameError(Exception):
-    pass
-
+logging.basicConfig(filename="sample.log", filemode='w', level=logging.ERROR)
 
 spare_parts_list = []
 list_of_sellers = []
@@ -38,18 +34,18 @@ def drom_bot():
     options.add_experimental_option("prefs", prefs)
     browser = webdriver.Chrome('chromedriver.exe', chrome_options=options)
     browser.get('https://www.drom.ru/')
-    sleep(3)
+    sleep(4)
     browser.get('https://baza.drom.ru/omsk/sell_spare_parts/')
-    sleep(3)
+    sleep(4)
     scroll = randint(300, 500)
     browser.execute_script(f"window.scrollTo(0, {scroll})")
-    sleep(3)
+    sleep(4)
     part_name = browser.find_element_by_name('query')
     part_name.clear()
     part_name.send_keys(random.choice(spare_parts_list))
-    sleep(3)
+    sleep(4)
     part_name.send_keys(selenium.webdriver.common.keys.Keys.ENTER)
-    sleep(3)
+    sleep(4)
     value = browser.find_elements_by_class_name('ellipsis-text__left-side')
     for i in value:
         if str(i.text) in list_of_sellers:
@@ -61,13 +57,8 @@ def drom_bot():
                 dict_sellers[key] = v_dict
             else:
                 dict_sellers[key] = count
-            print(f'совпадение продавца: {i.text}')
             logging.error(f'совпадение продавца: {i.text}')
             i.click()
-            # phone = browser.find_element_by_xpath('//*[@id="fieldsetView"]/div/div[1]/'
-            #                                       'div/div[3]/div[1]/noindex/div/a')
-            # phone.click()
-            # print('Телефон просмотрен')
             break
     browser.close()
 
@@ -76,18 +67,14 @@ we_get_the_name_of_the_spare_part()
 get_sellers()
 
 threading_bot = ['drom_bot_1', 'drom_bot_2', 'drom_bot_3', 'drom_bot_4', 'drom_bot_5']
-
-start = time.time()
-
+logging.error(f' Программа запущена: {datetime.datetime.now()}')
 for cycle in range(1, 101):
-    logging.error(f'*********Новый цикл***********')
-    print('*' * 20, f'{cycle}ый цикл', '*' * 20)
+    logging.error(f'***************** Цикл №{cycle} *****************')
     threads_bot = [threading.Thread(target=drom_bot) for bots in threading_bot]
     for bot in threads_bot:
         bot.start()
     for bot in threads_bot:
         bot.join()
-
-end = time.time()
+    subprocess.call('СкриптМегафон.bat')
+logging.error(dict_sellers)
 print(dict_sellers)
-print('Время работы:', (end - start))
